@@ -1,0 +1,43 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Registro alunos</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+</head>
+<body>
+{% load widget_tweaks %}
+<div class="container has-text-centered" style="margin-top: 50px;">
+    <div class="box" style="max-width: 400px; margin: auto;">
+        <h1 class="title">Entrar</h1>
+        <form method="POST" class="ml-5 mr-5">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label">Nome de Usuário</label>
+                <div class="control">
+                    {{ form.username|add_class:"input custom-width" }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Senha</label>
+                <div class="control">
+                    {{ form.password|add_class:"input" }}
+                </div>
+            </div>
+            <div class="control">
+                <button class="button is-primary is-outlined" type="submit">Entrar</button>
+                <a href="{% url 'index' %}" class="button is-primary is-outlined">Voltar</a>
+            </div>
+        </form>
+        <br>
+        {% if form.errors %}
+            <div class="notification is-danger is-small">
+                <p>Nome de usuário ou senha inválidos. Tente novamente.</p>
+            </div>
+        {% endif %} 
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+            <div class="hero-body is-inline">
+                <p class="is-inline title is-3 ml-3 mt-5">Bem-vindo, {{ user.username }}!</p>
+            </div>
+    {% else %}
+            <div class="hero-body is-inline">
+                <p class="is-inline title is-3 ml-3 mt-5">Bem-vindo!</p>
+            </div>
+    {% endif %}
+    <header class="is-flex is-justify-content-space-between ml-3 mt-5">
+        {% if user.is_authenticated %}
+            <a href="{% url 'registro:new_registro' %}" class="button is-primary is-outlined " style="height: 50%;">Novo registro</a>
+        {% endif %}
+        
+        <div class="field has-addons is-justify-content-center">
+                <form method="get" action="{% url 'registro:pesquisa' %}">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Pesquisar..." class="input is-normal">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-primary is-outlined">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </header>
+    <br>
+    <table class="table ml-3">
+        <thead>
+            <tr>
+                <td class="has-text-centered">Nº</td>
+                <td>Nome</td>
+                <td>Nome da mãe</td>
+                <td class="has-text-centered">Data de nascimento</td>
+                <td class="has-text-centered">Número da caixa</td>
+                {% if user.is_authenticated %}
+                    <td></td> 
+                    <td></td>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody class="mr-2">
+        {% if results %}
+            {% for item in results %}
+                    <tr>
+                        <td style="width: 5%;" class="has-text-centered">{{ forloop.counter }}</td>
+                        <td style="width: 30%;">{{ item.nome }}</td>
+                        <td style="width: 30%;">{{ item.nome_mae }}</td>    
+                        <td style="width: 15%;" class="has-text-centered">{{ item.data_nascimento }}</td>
+                        <td style="width: 25%;" class="has-text-centered">{{ item.numero_caixa }}</td>
+                        {% if user.is_authenticated %}
+                            <td><a href="{% url 'registro:update_registro' item.id %}" class="button is-primary is-outlined is-small">Editar</a></td> 
+                            <td><a href="{% url 'registro:delete_registro' item.id %}" class="button is-primary is-outlined is-small">Deletar</a></td>
+                        {% endif %}
+                    </tr>
+            {% endfor %}
+        {% endif %}
+
+        {% for registro in registros %}   
+            <tr> 
+                <td style="width: 5%;" class="has-text-centered">{{ forloop.counter }}</td>
+                <td style="width: 30%;">{{ registro.nome}}</td>
+                <td style="width: 30%;">{{ registro.nome_mae}}</td>
+                <td style="width: 15%;" class="has-text-centered">{{ registro.data_nascimento}}</td>
+                <td style="width: 25%;" class="has-text-centered">{{ registro.numero_caixa}}</td>
+                {% if user.is_authenticated %}
+                    <td><a href="{% url 'registro:update_registro' registro.id %}" class="button is-primary is-outlined is-small">Editar</a></td>
+                    <td><a href="{% url 'registro:delete_registro' registro.id %}" class="button is-primary is-outlined is-small">Deletar</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock%}

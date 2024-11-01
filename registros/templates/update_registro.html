@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container has-text-centered" style="margin-top: 50px;"> <!-- Container para centralização -->
+    <p class="subtitle is-4"><strong>Novo registro</strong></p>
+    <div class="box" style="max-width: 350px; margin: auto;"> <!-- Caixa centralizada -->
+        <form action="{% url 'registro:update_registro' pk %}" method="post">
+            {% csrf_token %}
+            <div>
+                <div class="field">
+                    {% for field in form %}
+                        <label for="{{ field.auto_id }}" class="label">{{ field.label }}</label>
+                        <div class="control">
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-primary is-outlined">Salvar</button>
+                    <a href="{% url 'registro:list_registro' %}" class="button is-primary is-outlined">Voltar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

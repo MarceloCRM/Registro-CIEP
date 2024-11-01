@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Dados de Alunos - CIEP</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+</head>
+<body>
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title has-text-centered">Bem-vindo ao Banco de Dados de Alunos da CIEP 296 Presidente Benes!</h1>
+            <p class="subtitle has-text-centered">Acesse informações sobre alunos e ex-alunos da nossa escola.</p>
+            
+            <div class="content">
+                <h2 class="title is-4">O que você encontra aqui?</h2>
+                <ul>
+                    <li><strong>Consulta de informações</strong> sobre alunos e ex-alunos, incluindo nomes, datas de nascimento e registros de família.</li>
+                    <li><strong>Alterações</strong> diretas no banco de dados caso você seja um administrador.</li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <h2 class="title is-4">Como usar o sistema?</h2>
+                <p>Use o campo de busca abaixo para encontrar registros específicos ou explore a lista completa de alunos. Usuários cadastrados podem atualizar as informações.</p>
+            </div>
+            <div class="field has-addons is-justify-content-center">
+                <form method="get" action="{% url 'registro:pesquisa' %}">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Pesquisar..." class="input is-normal">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-primary is-outlined">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="buttons is-centered mt-5">
+                <a href="{% url 'registro:list_registro' %}" class="button is-primary is-outlined">Listar Todos os Registros</a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'registro:login' %}" class="button is-primary is-outlined">Entrar como administrador</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+</body>
+</html>

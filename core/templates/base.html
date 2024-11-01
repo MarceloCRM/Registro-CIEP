@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro alunos</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item is-size-3" href="{% url 'index' %}">
+              <div class="has-text-white pb-2"><strong>Registro alunos</strong></div>
+            </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a href="{% url 'index' %}" class="navbar-item">
+              <strong>Inicio</strong>
+            </a>
+            {% if user.is_authenticated %}
+                <a href="http://127.0.0.1:8000/admin/" class="navbar-item"><strong>Admin</strong></a>
+            {% endif %} 
+          </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                            {% if user.is_authenticated %}
+                                <form action="{% url 'registro:logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="button is-light">Desconectar</button>
+                                </form>
+                            {% else %}
+                                <a href="{% url 'registro:login' %}" class="button is-primary">Entrar</a>
+                            {% endif %}
+                    </div>
+                </div>
+            
+        </div>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
