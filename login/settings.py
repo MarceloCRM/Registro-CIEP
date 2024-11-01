@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wj36p%dpolzg=$ep*w72$8-&o&8e=gj7f4z&l97ttn0t6vt$t*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['registro-ciep.onrender.com']
 
 LOGIN_REDIRECT_URL = 'registro:list_registro'
 LOGOUT_REDIRECT_URL = 'registro:list_registro'
